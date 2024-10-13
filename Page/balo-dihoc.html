@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link lấy icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <!-- bootstrap 4 cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/main.css">
+    <link rel="stylesheet" href="../Css/main-moblie.css">
+    <link rel="stylesheet" href="../Css/Shop.css">
+
+
+    <title>Đàm Trung Kiên</title>
+</head>
+<body>
+    <div id="app">
+    <div class="container">
+        <div class="header">
+            <div class="content">
+                <div class="box-menu-mobile">
+                    <button>
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Start box menu -->
+    <div class="box-logo">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../Picture/logonew.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <nav class="box-menu">
+        <ul class="all-list-menu">
+            <li>
+                <a href="../index.html" class="hover-a">Trang chủ</a>
+            </li>
+            
+            <li class="padding-list-menu">
+                <a href="./Product.html" class="hover-a">Sản phẩm <i class="fa-solid fa-chevron-down"></i></a>
+                <ul class="sub-menu">
+                    <li><a href="./do-choi-theo-phim.html" class="hover-a">Đồ chơi theo phim</a></li>
+                    <li><a href="./do-choi-phuong-tien.html" class="hover-a">Đồ chơi phương tiện</a></li>
+                    <li><a href="./do-choi-sang-tao.html" class="hover-a">Đồ chơi sáng tạo</a></li>
+                    <li><a href="./do-choi-mo-phong.html" class="hover-a">Đồ chơi mô phỏng</a></li>
+                    <!-- Menu cấp 3 -->
+                    <li>
+                        <a href="./do-dung-hoc-tap.html" class="hover-a">Đồ dùng học tập <i class="fa-solid fa-caret-right"></i></a>
+                        <ul class="sub-sub-menu">
+                            <li><a href="./balo-dihoc.html" class="hover-a">Balo đi học</a></li>
+                            <li><a href="./balo-mamnon.html" class="hover-a">Balo mầm non</a></li>
+                            <li><a href="./hop-viet.html" class="hover-a">Hộp viết</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="padding-list-menu">
+                <a href="./introduce.html" class="hover-a">Giới thiệu</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./news.html" class="hover-a">Tin tức</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./contact.html" class="hover-a">Liên hệ</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./kiemtradonhang.html" class="hover-a">Kiểm tra đơn hàng</a>
+            </li>
+        </ul>
+    </nav>
+
+<!-- End Box Menu -->
+                <!-- Biểu tượng tìm kiếm -->
+                <div class="box-icon">
+                    <a href="#" class="box-search" @click.prevent="openSearchBox">
+                        <i class="fa-solid fa-magnifying-glass search"></i>
+                    </a>
+
+                    <div v-if="showSearch" class="custom-alert">
+                        <div class="alert-box">
+                            <p>Nhập thông tin tìm kiếm:</p>
+                            <input type="text" v-model="searchQuery" placeholder="Nhập từ khoá để tìm kiếm..." />
+                            <button @click="submitSearch" class="btn-search">Tìm kiếm</button>
+                            <button @click="closeSearchBox" class="btn-close">Đóng</button>
+                        </div>
+                    </div>                    
+
+                    <!-- Biểu tượng người dùng -->
+                    <div class="box-user">
+                        <div class="user-icon" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+                            <!-- Biểu tượng người dùng -->
+                            <i class="fa fa-user"></i>
+
+                            <!-- Khi hover vào biểu tượng người dùng thì hiện dropdown -->
+                            <div v-if="isHovering" class="dropdown">
+                                <a href="./login.html" class="dropdown-item">Đăng nhập</a>
+                                <a href="./register.html" class="dropdown-item">Đăng ký</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biểu tượng yêu thích -->
+                    <a href="./heart.html" class="box-heart" style="position: relative;">
+                        <i class="fa-regular fa-heart heart" style="font-size: 24px;"></i>
+                        <span 
+                          v-if="heartItems.length > 0" 
+                          style="
+                            position: absolute; 
+                            top: -5px; 
+                            right: -10px; 
+                            background: red; 
+                            color: white; 
+                            border-radius: 50%; 
+                            padding: 2px 6px; 
+                            font-size: 12px;
+                          "
+                        >
+                          {{ heartItems.length }}
+                        </span>
+                    </a>
+                    
+                    <!-- Biểu tượng giỏ hàng -->
+                    <div class="box-cart" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <a href="#">
+                          <i class="fa-solid fa-cart-shopping cart"></i>
+                          <span class="cart-count">{{ cartItems.length }}</span>
+                        </a>
+                    
+                        <!-- Popup hiển thị sản phẩm khi hover vào giỏ hàng -->
+                        <div class="cart-popup" v-if="showCart">
+                            <div v-for="(item, index) in cartItems" :key="item.id" class="cart-item">
+                            <img :src="item.image" alt="Ảnh sản phẩm" class="product-image" />
+                            <div class="product-info">
+                                <h4>{{ item.name }}</h4>
+                                <p>{{ item.description }}</p>
+                                <span>{{ item.price }} Đ</span>
+                            </div>
+                            <!-- Icon thùng rác để xóa sản phẩm -->
+                            <button @click="removeFromCart(index)" class="remove-item">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            </div>
+                            <!-- Thông báo hoặc nút Thanh toán -->
+                            <div v-if="cartItems.length === 0" class="empty-cart">
+                            Không có sản phẩm nào trong giỏ hàng
+                            </div>
+                            <a v-else @click="proceedToCheckout" class="view-cart" href="./pay.html">Thanh toán</a>
+                       </div>
+                    <!-- Kết thúc giỏ hàng -->
+                        
+
+                      </div>
+                </div>
+            </div>
+        </div>
+        
+   
+        <!-- Phần Main -->
+        <div class="box-shop">
+            <div class="box-sidebar">
+                <div class="first-sidebar">
+                    <div class="title-sidebar">
+                        Thể loại
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./do-choi-theo-phim.html">Siêu anh hùng</a></div>
+                        <div class="box-number">1</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./do-choi-phuong-tien.html">Phương tiện giao thông</a></div>
+                        <div class="box-number">9</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./do-choi-sang-tao.html">Đồ chơi sáng tạo</a></div>
+                        <div class="box-number">5</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./do-choi-mo-phong.html">Đồ chơi mô phỏng</a></div>
+                        <div class="box-number">1</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./do-dung-hoc-tap.html">Đồ dùng học tập</a></div>
+                        <div class="box-number">6</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./balo-dihoc.html">Ba lô đi học</a></div>
+                        <div class="box-number">9</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./balo-mamnon.html">Ba lô mầm non</a></div>
+                        <div class="box-number">1</div>
+                    </div>
+                    <div class="in-sidebar">
+                        <div class="name"><a href="./hop-viet.html">Hộp viết</a></div>
+                        <div class="box-number">1</div>
+                    </div>
+                </div>
+                <div class="box-price">
+                    <div class="price-title">Giá (Đ)</div>
+                    <input type="range" name="" id="">
+                    <div class="box-range">
+                        Phạm vi:
+                        <span>200.000 Đ</span>
+                        <span>-</span>
+                        <span>5.000.000 Đ</span>
+                    </div>
+                </div>
+
+                <!-- Phần thương hiệu -->
+
+                <div class="box-trademark">
+                    <div class="title-box-trademark">Thương hiệu</div>
+                    <div class="list-trademark">
+                        <ul>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">3C4G</span>
+                                </div>
+                                <div class="text-number">39</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">44 CATS</span>
+                                </div>
+                                <div class="text-number">5</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">52TOYS</span>
+                                </div>
+                                <div class="text-number">27</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">AMONG US</span>
+                                </div>
+                                <div class="text-number">13</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">ANGRY BIRDS</span>
+                                </div>
+                                <div class="text-number">1</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">AVENGERS</span>
+                                </div>
+                                <div class="text-number">49</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">AWESONME BLOSSOM</span>
+                                </div>
+                                <div class="text-number">1</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">B.BRAND</span>
+                                </div>
+                                <div class="text-number">12</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">BABY ALIVE</span>
+                                </div>
+                                <div class="text-number">21</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">BANANA</span>
+                                </div>
+                                <div class="text-number">5</div>
+                            </li>
+                            <li>
+                                <div class="trademark-name">
+                                    <input class="in-trademark" type="checkbox">
+                                    <span class="name-trademark">BANDAI CANDY</span>
+                                </div>
+                                <div class="text-number">15</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Kết thúc phần thương hiệu -->
+
+                <!-- Phần độ tuổi -->
+                <div class="all-box-age">
+                    <div class="title-age">Độ tuổi</div>
+                    <div class="box-list-age">
+                        <div class="box-img-age">
+                            <a href="./do-choi-sang-tao.html">
+                                <img src="../Picture/do-tuoi/0_-_12_thang_296x.jpg" alt=""> 
+                            </a>
+                        </div>
+                        <div class="box-img-age">
+                            <a href="./do-choi-theo-phim.html">
+                                <img src="../Picture/do-tuoi/1_-_3_tu_i_296x.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="box-img-age">
+                            <a href="./do-choi-phuong-tien.html">
+                                <img src="../Picture/do-tuoi/3_-_6_tu_i_296x.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="box-img-age">
+                            <a href="./balo-dihoc.html">
+                                <img src="../Picture/do-tuoi/6_-_12_tu_i_296x.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="box-img-age">
+                            <a href="./hop-viet.html">
+                                <img src="../Picture/do-tuoi/Tren_12_tu_i_296x.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Kết thúc phần độ tuổi -->
+
+                <div class="box-feature-product">
+                    <div class="text-feature-product">Sản phẩm nổi bật</div>
+                    <div>
+                        <div class="box-product-in">
+                            <div class="picture-product-in">
+                                <a href="">
+                                    <img src="../Picture/new-goods/sanpham1.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="box-in-content">
+                                <div class="box-star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="title-feature-product">
+                                    Lego Ninjago
+                                </div>
+                                <div class="price-feature-prod">
+                                    <del>2.000.000 Đ</del>
+                                    <span>1.629.000 Đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-product-in">
+                            <div class="picture-product-in">
+                                <a href="">
+                                    <img src="../Picture/new-goods/sanpham2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="box-in-content">
+                                <div class="box-star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="title-feature-product">
+                                    Đồ chơi Momster
+                                </div>
+                                <div class="price-feature-prod">
+                                    <del>1.000.000 Đ</del>
+                                    <span>911.000 Đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-product-in" style="border: none;">
+                            <div class="picture-product-in">
+                                <a href="">
+                                    <img src="../Picture/new-goods/sanpham3.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="box-in-content">
+                                <div class="box-star">
+                                    <i style="color: rgb(219, 218, 218);" class="fa-solid fa-star"></i>
+                                    <i style="color: rgb(219, 218, 218);" class="fa-solid fa-star"></i>
+                                    <i style="color: rgb(219, 218, 218);" class="fa-solid fa-star"></i>
+                                    <i style="color: rgb(219, 218, 218);" class="fa-solid fa-star"></i>
+                                    <i style="color: rgb(219, 218, 218);" class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="title-feature-product">
+                                    Lắp ráp nhận vật Pokemon
+                                </div>
+                                <div class="price-feature-prod">
+                                    <del>200.000 Đ</del>
+                                    <span>149.000 Đ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-all-product">
+                <div class="header-product">
+                    <div class="show-item">
+                        <div>Hiển thị 1–12 trong 23 mặt hàng</div>
+                    </div>
+                    <select name="" id="box-all-list">
+                        <option value="">Sắp xếp mặc định</option>
+                        <option value="">Sắp xếp theo mức độ phổ biến</option>
+                        <option value="">Sắp xếp theo Xếp hạng trung bình</option>
+                        <option value="">Sắp xếp theo Mới nhất</option>
+                        <option value="">Sắp xếp theo giá: Thấp đến cao</option>
+                        <option value="">Sắp xếp theo giá: Cao đến thấp</option>
+                    </select>
+                </div>
+
+                <!-- Tất cả sản phẩm -->
+                <div class="all-box-new-product">
+
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-1" src="../Picture/all-sanpham/balo-di-hoc.jpg" alt="">
+                                <script>
+                                    let newProduct = document.getElementById('Pic-product-1');
+                                    
+                                    newProduct.addEventListener('mouseout', function() {
+                                        newProduct.src = '../Picture/Shop/products-10-1-600x600.jpg';
+                                    });
+    
+                                    newProduct.addEventListener('mouseover', function() {
+                                        newProduct.src = '../Picture/Shop/products-10-2-600x600.jpg';
+                                    });
+                                </script>
+                                
+                            </a>
+                            <div class="box-icon-new-product">
+                                <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping" @click="addToCart(product17)"></i>
+                                <i
+                                style="font-size: 18px;" id="heart-Product"
+                                :class="isHearted(product17) ? 'fa-solid fa-heart' : 'fa-regular fa-heart' "
+                                @click="toggleHeart(product17)"
+                                style="cursor: pointer; color: red;"
+                                title="Yêu thích"
+
+                                ></i>
+                                <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                            </div>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="color: #fcad02; margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(1 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Ba lô easy go</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            360.000 Đ
+                        </div>
+                    </div>
+                    <!-- <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-2" src="../Picture/all-sanpham/all-sp2.jpg" alt="">
+                                <script>
+                                    let newProduct_1 = document.getElementById('Pic-product-2');
+                                    
+                                    newProduct_1.addEventListener('mouseout', function() {
+                                        newProduct_1.src = '../Picture/Shop/products-15-6-600x600.jpg';
+                                    });
+    
+                                    newProduct_1.addEventListener('mouseover', function() {
+                                        newProduct_1.src = '../Picture/Shop/products-15-7-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(1 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Bộ Thiết Kế Thời Trang</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            119.000 Đ
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-3" src="../Picture/all-sanpham/all-sp3.jpg" alt="">
+                                <script>
+                                    let newProduct_2 = document.getElementById('Pic-product-3');
+                                    
+                                    newProduct_2.addEventListener('mouseout', function() {
+                                        newProduct_2.src = '../Picture/Shop/products-13-600x600.jpg';
+                                    });
+    
+                                    newProduct_2.addEventListener('mouseover', function() {
+                                        newProduct_2.src = '../Picture/Shop/products-13-1-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Bộ Sticker Food Truck</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            183.000 Đ
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-4" src="../Picture/all-sanpham/all-sp4.jpg" alt="">
+                                <script>
+                                    let newProduct_3 = document.getElementById('Pic-product-4');
+                                    
+                                    newProduct_3.addEventListener('mouseout', function() {
+                                        newProduct_3.src = '../Picture/Shop/products-17-6-600x600.jpg';
+                                    });
+    
+                                    newProduct_3.addEventListener('mouseover', function() {
+                                        newProduct_3.src = '../Picture/Shop/products-17-7-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Thời trang Pastel Pop</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>150.000 Đ</del> 
+                            <span style="color: red;">119.000 Đ</span>
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-5" src="../Picture/all-sanpham/all-sp5.jpg" alt="">
+                                <script>
+                                    let newProduct_4 = document.getElementById('Pic-product-5');
+                                    
+                                    newProduct_4.addEventListener('mouseout', function() {
+                                        newProduct_4.src = '../Picture/Shop/products-17-2-600x600.jpg';
+                                    });
+    
+                                    newProduct_4.addEventListener('mouseover', function() {
+                                        newProduct_4.src = '../Picture/Shop/products-17-3-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Fashion Design Sketchbook</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>400.000 Đ</del> 
+                            <span style="color: red;">333.000 Đ</span>
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-6" src="../Picture/all-sanpham/all-sp6.jpg" alt="">
+                                <script>
+                                    let newProduct_5 = document.getElementById('Pic-product-6');
+                                    
+                                    newProduct_5.addEventListener('mouseout', function() {
+                                        newProduct_5.src = '../Picture/Shop/products-10-4-600x600.jpg';
+                                    });
+    
+                                    newProduct_5.addEventListener('mouseover', function() {
+                                        newProduct_5.src = '../Picture/Shop/products-10-5-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="color: #fcad02; margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Móc khoá Balo Mini</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>250.000 Đ</del> 
+                            <span style="color: red;">199.000 Đ</span>
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-7" src="../Picture/all-sanpham/all-sp7.jpg" alt="">
+                                <script>
+                                    let newProduct_12 = document.getElementById('Pic-product-7');
+                                    
+                                    newProduct_12.addEventListener('mouseout', function() {
+                                        newProduct_12.src = '../Picture/Shop/products-10-1-600x600.jpg';
+                                    });
+    
+                                    newProduct_12.addEventListener('mouseover', function() {
+                                        newProduct_12.src = '../Picture/Shop/products-10-2-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="color: #fcad02; margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(1 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Fashion Design Sketchbook</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            350.000 Đ
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-8" src="../Picture/all-sanpham/all-sp8.jpg" alt="">
+                                <script>
+                                    let newProduct_13 = document.getElementById('Pic-product-8');
+                                    
+                                    newProduct_13.addEventListener('mouseout', function() {
+                                        newProduct_13.src = '../Picture/Shop/products-15-6-600x600.jpg';
+                                    });
+    
+                                    newProduct_13.addEventListener('mouseover', function() {
+                                        newProduct_13.src = '../Picture/Shop/products-15-7-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(1 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Adventure Fun Stationery</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            550.000 Đ
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-9" src="../Picture/all-sanpham/all-sp9.jpg" alt="">
+                                <script>
+                                    let newProduct_14 = document.getElementById('Pic-product-9');
+                                    
+                                    newProduct_14.addEventListener('mouseout', function() {
+                                        newProduct_14.src = '../Picture/Shop/products-13-600x600.jpg';
+                                    });
+    
+                                    newProduct_14.addEventListener('mouseover', function() {
+                                        newProduct_14.src = '../Picture/Shop/products-13-1-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Thời Trang Blooming Creativity</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            134.000 Đ
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-10" src="../Picture/all-sanpham/all-sp10.jpg" alt="">
+                                <script>
+                                    let newProduct_15 = document.getElementById('Pic-product-10');
+                                    
+                                    newProduct_15.addEventListener('mouseout', function() {
+                                        newProduct_15.src = '../Picture/Shop/products-17-6-600x600.jpg';
+                                    });
+    
+                                    newProduct_15.addEventListener('mouseover', function() {
+                                        newProduct_15.src = '../Picture/Shop/products-17-7-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Thời Trang City Style</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>150.000 Đ</del> 
+                            <span style="color: red;">134.000 Đ</span>
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-11" src="../Picture/all-sanpham/all-sp11.jpg" alt="">
+                                <script>
+                                    let newProduct_16 = document.getElementById('Pic-product-11');
+                                    
+                                    newProduct_16.addEventListener('mouseout', function() {
+                                        newProduct_16.src = '../Picture/Shop/products-17-2-600x600.jpg';
+                                    });
+    
+                                    newProduct_16.addEventListener('mouseover', function() {
+                                        newProduct_16.src = '../Picture/Shop/products-17-3-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Thời Trang Dạng Scratch</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>150.000 Đ</del> 
+                            <span style="color: red;">119.000 Đ</span>
+                        </div>
+                    </div>
+                    <div class="new-product-1">
+                        <div class="pic-product-1">
+                            <a href="">
+                                <img id="Pic-product-12" src="../Picture/all-sanpham/all-sp12.jpg" alt="">
+                                <script>
+                                    let newProduct_17 = document.getElementById('Pic-product-12');
+                                    
+                                    newProduct_17.addEventListener('mouseout', function() {
+                                        newProduct_17.src = '../Picture/Shop/products-10-4-600x600.jpg';
+                                    });
+    
+                                    newProduct_17.addEventListener('mouseover', function() {
+                                        newProduct_17.src = '../Picture/Shop/products-10-5-600x600.jpg';
+                                    });
+                                </script>
+                                <div class="box-icon-new-product">
+                                    <i style="font-size: 19px;" id="cart-Product" class="fa-solid fa-cart-shopping"></i>
+                                    <i style="font-size: 18px;" id="heart-Product" class="fa-solid fa-heart"></i>
+                                    <i style="font-size: 18px;" id="search-Product" class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box-star" style="width: 100%; height: 23px;">
+                            <i style="color: #fcad02; margin-left: 0;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i style="color: #fcad02;" class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span style="margin-left: 5px; color: rgb(201, 201, 201); font-size: 12px;">(0 review)</span>
+                        </div>
+                        <div class="title-new-product">
+                            <a href="">Thời Trang Blooming Vibes</a>
+                        </div>
+                        <div style="font-size: 16px; color: rgb(170, 167, 167);">
+                            <del>150.000 Đ</del> 
+                            <span style="color: red;">129.000 Đ</span>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- Kết thúc tất cả sản phẩm -->
+
+                
+            </div>
+        </div>
+        <!-- End Main -->
+        
+    </div>
+    <!-- Phần footer -->
+    <div class="box-first-footer">
+        <div class="contact">
+            <h2>Thông tin liên hệ</h2>
+            <div class="in">
+                <div>Tầng 81 Toà Lendmark 81 Hồ Chính Minh</div>
+                <div>Phone: 0376952***</div>
+                <div>Gmail: damtrungkien229@gmail.com</div>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Danh mục</h2>
+            <div class="in">
+                <a href="">
+                    <div>Đồ chơi mầm non</div>
+                </a>
+                <a href="">
+                    <div>Búp bê</div>
+                </a>
+                <a href="">
+                    <div>Đồ chơi lắp ghép</div>
+                </a>
+                <a href="">
+                    <div>Robot</div>
+                </a>
+                <a href="">
+                    <div>Xe đạp & Scooter</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Hỗ trợ khách hàng</h2>
+            <div class="in">
+                <a href="">
+                    <div>Chính sách bảo mật</div>
+                </a>
+                <a href="">
+                    <div>Chính sách bảo hành đổi trả hàng hóa</div>
+                </a>
+                <a href="">
+                    <div>Chính sách thanh toán</div>
+                </a>
+                <a href="">
+                    <div>Những câu hỏi thường gặp</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Tham gia với chúng tôi</h2>
+            <div class="in">
+                <div style="margin-bottom: 25px;">Nhập email của bạn bên dưới để là người đầu tiên biết 
+                    về sản phẩm mới ra mắt của chúng tôi.
+                </div>
+                <div class="box-email">
+                    <input type="text" placeholder="Email adress...">
+                    <button type="submit">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                </div>
+                <div class="icon-contact">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-dribbble"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-behance"></i>
+                            </a>
+                        </li>                     
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-second-footer">
+        <div class="first-box">
+            <div class="title">
+                Điều hành bởi © Đàm Trung Kiên
+            </div>
+        </div>
+        <div class="second-box">
+            <div class="box-bank">
+                <img src="Picture/payments-1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- <div style="margin-bottom: 600px;"></div> -->
+
+    <script src="https://kit.fontawesome.com/eda05fcf5c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="../js/app.js"></script>
+    </div>
+    <!-- end div app -->
+</body>
+</html>
+

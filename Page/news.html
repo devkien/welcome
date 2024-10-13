@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link lấy icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <!-- bootstrap 4 cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/main.css">
+    <link rel="stylesheet" href="../Css/main-moblie.css">
+    <link rel="stylesheet" href="../Css/news.css">
+
+
+    <title>Đàm Trung Kiên</title>
+</head>
+<body>
+    <div id="app">
+    <div class="container">
+        <div class="header">
+            <div class="content">
+                <div class="box-menu-mobile">
+                    <button>
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Start box menu -->
+    <div class="box-logo">
+        <div class="logo">
+            <a href="../index.html">
+                <img src="../Picture/logonew.png" alt="">
+            </a>
+        </div>
+    </div>
+
+    <nav class="box-menu">
+        <ul class="all-list-menu">
+            <li>
+                <a href="../index.html" class="hover-a">Trang chủ</a>
+            </li>
+            
+            <li class="padding-list-menu">
+                <a href="./Product.html" class="hover-a">Sản phẩm <i class="fa-solid fa-chevron-down"></i></a>
+                <ul class="sub-menu">
+                    <li><a href="./do-choi-theo-phim.html" class="hover-a">Đồ chơi theo phim</a></li>
+                    <li><a href="./do-choi-phuong-tien.html" class="hover-a">Đồ chơi phương tiện</a></li>
+                    <li><a href="./do-choi-sang-tao.html" class="hover-a">Đồ chơi sáng tạo</a></li>
+                    <li><a href="./do-choi-mo-phong.html" class="hover-a">Đồ chơi mô phỏng</a></li>
+                    <!-- Menu cấp 3 -->
+                    <li>
+                        <a href="./do-dung-hoc-tap.html" class="hover-a">Đồ dùng học tập <i class="fa-solid fa-caret-right"></i></a>
+                        <ul class="sub-sub-menu">
+                            <li><a href="./balo-dihoc.html" class="hover-a">Balo đi học</a></li>
+                            <li><a href="./balo-mamnon.html" class="hover-a">Balo mầm non</a></li>
+                            <li><a href="./hop-viet.html" class="hover-a">Hộp viết</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="padding-list-menu">
+                <a href="./introduce.html" class="hover-a">Giới thiệu</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./news.html" class="hover-a">Tin tức</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./contact.html" class="hover-a">Liên hệ</a>
+            </li>
+            <li class="padding-list-menu">
+                <a href="./kiemtradonhang.html" class="hover-a">Kiểm tra đơn hàng</a>
+            </li>
+        </ul>
+    </nav>
+
+<!-- End Box Menu -->
+                <!-- Biểu tượng tìm kiếm -->
+                <div class="box-icon">
+                    <a href="#" class="box-search" @click.prevent="openSearchBox">
+                        <i class="fa-solid fa-magnifying-glass search"></i>
+                    </a>
+
+                    <div v-if="showSearch" class="custom-alert">
+                        <div class="alert-box">
+                            <p>Nhập thông tin tìm kiếm:</p>
+                            <input type="text" v-model="searchQuery" placeholder="Nhập từ khoá để tìm kiếm..." />
+                            <button @click="submitSearch" class="btn-search">Tìm kiếm</button>
+                            <button @click="closeSearchBox" class="btn-close">Đóng</button>
+                        </div>
+                    </div>                    
+
+                    <!-- Biểu tượng người dùng -->
+                    <div class="box-user">
+                        <div class="user-icon" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+                            <!-- Biểu tượng người dùng -->
+                            <i class="fa fa-user"></i>
+
+                            <!-- Khi hover vào biểu tượng người dùng thì hiện dropdown -->
+                            <div v-if="isHovering" class="dropdown">
+                                <a href="./login.html" class="dropdown-item">Đăng nhập</a>
+                                <a href="./register.html" class="dropdown-item">Đăng ký</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biểu tượng yêu thích -->
+                    <a href="#" class="box-heart">
+                      <i class="fa-regular fa-heart heart"></i>
+                    </a>
+                    
+                    <!-- Biểu tượng giỏ hàng -->
+                    <div class="box-cart" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <a href="#">
+                          <i class="fa-solid fa-cart-shopping cart"></i>
+                          <span class="cart-count">{{ cartItems.length }}</span>
+                        </a>
+                    
+                        <!-- Popup hiển thị sản phẩm khi hover vào giỏ hàng -->
+                        <div class="cart-popup" v-if="showCart">
+                            <div v-for="(item, index) in cartItems" :key="item.id" class="cart-item">
+                            <img :src="item.image" alt="Ảnh sản phẩm" class="product-image" />
+                            <div class="product-info">
+                                <h4>{{ item.name }}</h4>
+                                <p>{{ item.description }}</p>
+                                <span>{{ item.price }} Đ</span>
+                            </div>
+                            <!-- Icon thùng rác để xóa sản phẩm -->
+                            <button @click="removeFromCart(index)" class="remove-item">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            </div>
+                            <!-- Thông báo hoặc nút Thanh toán -->
+                            <div v-if="cartItems.length === 0" class="empty-cart">
+                            Không có sản phẩm nào trong giỏ hàng
+                            </div>
+                            <a v-else @click="proceedToCheckout" class="view-cart" href="./pay.html">Thanh toán</a>
+                       </div>
+                    <!-- Kết thúc giỏ hàng -->
+                        
+
+                      </div>
+                </div>
+            </div>
+        </div>
+        
+   
+        <!-- Phần Main -->
+        <div class="news-section">
+            <h1 class="news-title">Tin tức</h1>
+            <div class="news-content">
+                <p class="update-message">Danh mục này đang cập nhật bài viết</p>
+            </div>
+
+        </div>
+        
+        <!-- End Main -->
+        
+    </div>
+    <!-- Phần footer -->
+    <div class="box-first-footer">
+        <div class="contact">
+            <h2>Thông tin liên hệ</h2>
+            <div class="in">
+                <div>Tầng 81 Toà Lendmark 81 Hồ Chính Minh</div>
+                <div>Phone: 0376952***</div>
+                <div>Gmail: damtrungkien229@gmail.com</div>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Danh mục</h2>
+            <div class="in">
+                <a href="">
+                    <div>Đồ chơi mầm non</div>
+                </a>
+                <a href="">
+                    <div>Búp bê</div>
+                </a>
+                <a href="">
+                    <div>Đồ chơi lắp ghép</div>
+                </a>
+                <a href="">
+                    <div>Robot</div>
+                </a>
+                <a href="">
+                    <div>Xe đạp & Scooter</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Hỗ trợ khách hàng</h2>
+            <div class="in">
+                <a href="">
+                    <div>Chính sách bảo mật</div>
+                </a>
+                <a href="">
+                    <div>Chính sách bảo hành đổi trả hàng hóa</div>
+                </a>
+                <a href="">
+                    <div>Chính sách thanh toán</div>
+                </a>
+                <a href="">
+                    <div>Những câu hỏi thường gặp</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Tham gia với chúng tôi</h2>
+            <div class="in">
+                <div style="margin-bottom: 25px;">Nhập email của bạn bên dưới để là người đầu tiên biết 
+                    về sản phẩm mới ra mắt của chúng tôi.
+                </div>
+                <div class="box-email">
+                    <input type="text" placeholder="Email adress...">
+                    <button type="submit">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                </div>
+                <div class="icon-contact">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-dribbble"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-behance"></i>
+                            </a>
+                        </li>                     
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-second-footer">
+        <div class="first-box">
+            <div class="title">
+                Điều hành bởi © Đàm Trung Kiên
+            </div>
+        </div>
+        <div class="second-box">
+            <div class="box-bank">
+                <img src="Picture/payments-1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- <div style="margin-bottom: 600px;"></div> -->
+
+    <script src="https://kit.fontawesome.com/eda05fcf5c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="../js/app.js"></script>
+    </div>
+    <!-- end div app -->
+</body>
+</html>
+

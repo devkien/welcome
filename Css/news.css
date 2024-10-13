@@ -1,0 +1,24 @@
+/* Đặt phần tiêu đề "Tin tức" ở giữa */
+.news-section {
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.news-title {
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 40px;
+    font-weight: normal;
+}
+
+/* Phần nội dung chính với thông báo cập nhật */
+.news-content {
+    width: 70%;
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    padding: 20px;
+}

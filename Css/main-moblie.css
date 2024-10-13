@@ -1,0 +1,455 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Questrial', sans-serif;
+}
+
+:root {
+    --color-text: #585858;
+    --Hover-icon: #1e91f2;
+}
+
+.box-menu-mobile {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .header {
+        vertical-align: middle;
+    }
+
+    .header .content .box-menu {
+        display: none;
+    }
+
+    .box-menu-mobile {
+        display: block;
+    }
+
+    .box-menu-mobile button {
+        width: 40px;
+        height: 34px;
+        border: none;
+        background-color: #fff;
+    }
+
+    .box-menu-mobile button i {
+        text-align: center;
+        font-size: 19px;
+        margin: 0;
+    }
+
+    .header .content {
+        /* background-color: #FF9B42; */
+        padding: 0;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 80px;
+    }
+
+    .box-logo {
+        width: 140px;
+    }
+
+    .box-logo .logo a img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .box-icon {
+        width: 35px;
+        display: flex;
+    }
+
+    .box-icon .box-search, .box-heart, .box-cart {
+        width: auto;
+        display: none;
+    }
+
+    .box-icon .box-user {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .banner {
+        width: 100%;
+        height: 352px;
+        margin-bottom: 60px;
+        /* overflow: hidden; */
+    }
+
+    .banner img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .banner .in-content {
+        top: 30%;
+    }
+
+    .in-content .title {
+        font-size: 32px;
+        letter-spacing: 0;
+    }
+
+    .in-content .text-title {
+        font-size: 16px;
+        letter-spacing: 0;
+    }
+
+    .in-content .all-button button {
+        border-radius: 10px;
+        font-size: 10px;
+        width: 167px;
+        height: 35px;
+    }
+
+    #list {
+        top: 85%
+    }
+
+    #list ul li button {
+        width: 13px;
+        height: 13px;
+    }
+
+    #left, #right {
+        display: none;
+    }
+
+    .banner:hover #left, .banner:hover #right {
+        display: none;
+    }
+
+    
+.all-box-product {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between; 
+}
+
+.box-product {
+    flex: 1 1 18%;
+    box-sizing: border-box;
+    padding: 10px;
+    max-width: 18%; 
+}
+
+.box-product img {
+    width: 100%; 
+    height: auto;
+}
+
+.title-product {
+    text-align: center;
+    margin-top: 5px;
+}
+
+
+@media (max-width: 768px) {
+    .box-product {
+        flex: 1 1 18%; 
+        max-width: 18%;
+    }
+}
+
+@media (max-width: 480px) {
+    .box-product {
+        flex: 1 1 18%; 
+        max-width: 18%;
+    }
+}
+
+ /* Css sản phẩm */
+/* CSS cho giao diện mobile */
+@media (max-width: 768px) {
+    .all-new-product {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Để các sản phẩm có khoảng cách đều nhau */
+        padding: 0 10px;
+    }
+
+    .new-product {
+        width: 32%; 
+        margin-bottom: -25px; 
+    }
+
+    .new-img-product img {
+        width: 100%; 
+        height: auto;
+    }
+
+    .box-name-product {
+        text-align: center;
+    }
+
+    .buttom-1 button {
+        width: 100%; 
+        padding: 10px;
+        background-color: #f2f2f2;
+        border: none;
+        cursor: pointer;
+    }
+
+    .star i {
+        font-size: 14px; 
+    }
+
+    .view-product {
+        font-size: 12px;
+    }
+
+    .price-product del {
+        font-size: 14px;
+    }
+
+    .price-product span {
+        font-size: 16px;
+        color: #ff0000;
+    }
+    .new-img-product .all-box-icon {
+        width: 20px;
+        height: 160px;
+    }
+    .contents-new-product {
+        margin-top: -105px;
+    }
+    .box-name-product .name-product {
+        font-size: 11px;
+    }
+    .view-product {
+        padding-left: 50px;
+    }
+}
+
+
+/* Kết thúc */
+    
+    .in-title .word  {
+        font-size: 18px;
+    }
+
+    .box-bg {
+        min-height: 1180.730px;
+    }
+
+    .box-bg .box-content {
+        display: flex;
+        justify-content: flex-start;
+        text-align: center;
+        align-content: center;
+    }
+
+    .box-content .title-content {
+        width: 100%;
+        height: 70px;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .box-first-content {
+        width: 100%;
+        height: 226.781px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .box-first-content .word-content {
+        text-align: center;
+    }
+
+    .box-first-content {
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .box-content .first-content {
+        margin-right: 0;
+        margin-bottom: 20px;
+        gap: 0;
+    }
+
+    .box-bg .box-img  {
+        left: 0;
+        bottom: 40px;
+        width: 100%;
+        height: 398px;
+        padding: 15px;
+        justify-content: center;
+    }
+
+    .box-bg .box-img .pic-chair {
+        width: 330px;
+        height: 398px;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .box-bg .box-img .pic-chair img {
+        margin-right: 0;
+    }
+
+    .box-bg .box-img  {
+        display: flex;
+        margin: 0;
+    }
+
+    .box-bg .box-img .pic-animation {
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    .all-box-banner {
+        width: 100%;
+        height: 758px;
+    }
+
+    .all-box-banner .box-first-banner {
+        width: 100%;
+        height: 354.062px;
+        padding: 0;
+    }
+
+    .box-first-banner .box-img-banner {
+        width: 100%;
+        height: 267.266px;
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .box-first-banner .box-img-banner img {
+        width: 100%;
+        height: 100%;
+        transition: all 0.4s ease-in-out;
+        object-fit: cover;
+    }
+
+    .title-in-banner h3 {
+        font-size: 25px;
+    }
+
+    .title-in-banner {
+        text-align: center;
+    }
+
+    .box-brand {
+        width: 100%;
+        height: 57px;
+        overflow: hidden;
+    }
+
+    .box-brand .in-brand {
+        gap: 10px;
+    }
+
+    .box-brand .in-brand a img {
+        padding: 0 7px;
+        width: 70px;
+        height: 100%;
+    }
+
+    .all-brand {
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 10px;
+    }
+
+    .brand-left {
+        flex-basis: 100%; 
+    }
+
+    .brand-big img {
+        width: 100%;
+        max-width: 300px; 
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .brand-right {
+        flex-basis: 100%; 
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 10px;
+        justify-content: space-between; 
+    }
+
+    .brand-small {
+        flex-basis: 48%; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .brand-small img {
+        width: 100%;
+        max-width: 120px; 
+        height: auto;
+    }
+
+    .brand-small button {
+        width: 100%; 
+        max-width: 120px; 
+        height: 30px; 
+        font-size: 14px; 
+    }
+
+    /* footer */
+    .box-first-footer {
+        width: 100%;
+        min-height: 950px;
+        padding: 55px 0 40px 0;
+        margin-top: 10px;     
+        gap: 20px;   
+    }
+
+    .contact {
+        width: 317.750px;
+        height: 120px;
+    }
+
+    .box-second-footer .first-box .title {
+        justify-content: center;
+    }
+
+    .second-box .box-bank {
+        display: flex;
+        justify-content: center;
+    }
+
+    .box-second-footer {
+        width: 100%;
+        height: 115px;
+    }
+
+    .tran-box {
+        padding: 10px 15px; /* Thu nhỏ padding trên màn hình nhỏ */
+        width: 90%; /* Đảm bảo vừa với màn hình di động */
+        font-size: 14px; /* Giảm kích thước chữ */
+    }
+
+    .tran-box .title {
+        font-size: 18px; /* Tăng cỡ chữ tiêu đề trên mobile */
+    }
+
+    .tran-box .text-title {
+        font-size: 14px; /* Điều chỉnh cỡ chữ nhỏ hơn */
+    }
+
+    .tran-box button {
+        padding: 6px 12px; /* Giảm padding của nút trên màn hình nhỏ */
+        font-size: 14px; /* Giảm kích thước chữ nút */
+    }
+    
+}

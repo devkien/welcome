@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link lấy icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <!-- bootstrap 4 cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/main.css">
+    <link rel="stylesheet" href="../Css/main-moblie.css">
+    <link rel="stylesheet" href="../Css/pay.css">
+
+    <title>Đàm Trung Kiên</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="header">
+                <div class="content">
+                    <div class="box-menu-mobile">
+                        <button>
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <div class="box-logo">
+                        <div class="logo">
+                            <a href="../index.html">
+                                <img src="../Picture/logonew.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+
+                    <nav class="box-menu">
+                        <ul class="all-list-menu">
+                            <li>
+                                <a href="../index.html" class="hover-a">Trang chủ</a>
+                            </li>
+                            
+                            <li class="padding-list-menu">
+                                <a href="./Product.html" class="hover-a">Sản phẩm <i class="fa-solid fa-chevron-down"></i></a>
+                                <ul class="sub-menu">
+                                    <li><a href="./do-choi-theo-phim.html" class="hover-a">Đồ chơi theo phim</a></li>
+                                    <li><a href="./do-choi-phuong-tien.html" class="hover-a">Đồ chơi phương tiện</a></li>
+                                    <li><a href="./do-choi-sang-tao.html" class="hover-a">Đồ chơi sáng tạo</a></li>
+                                    <li><a href="./do-choi-mo-phong.html" class="hover-a">Đồ chơi mô phỏng</a></li>
+                                    <!-- Menu cấp 3 -->
+                                    <li>
+                                        <a href="./do-dung-hoc-tap.html" class="hover-a">Đồ dùng học tập <i class="fa-solid fa-caret-right"></i></a>
+                                        <ul class="sub-sub-menu">
+                                            <li><a href="./balo-dihoc.html" class="hover-a">Balo đi học</a></li>
+                                            <li><a href="./balo-mamnon.html" class="hover-a">Balo mầm non</a></li>
+                                            <li><a href="./hop-viet.html" class="hover-a">Hộp viết</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                
+                            <li class="padding-list-menu">
+                                <a href="./introduce.html" class="hover-a">Giới thiệu</a>
+                            </li>
+                            <li class="padding-list-menu">
+                                <a href="./news.html" class="hover-a">Tin tức</a>
+                            </li>
+                            <li class="padding-list-menu">
+                                <a href="./contact.html" class="hover-a">Liên hệ</a>
+                            </li>
+                            <li class="padding-list-menu">
+                                <a href="./kiemtradonhang.html" class="hover-a">Kiểm tra đơn hàng</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <!-- Biểu tượng giỏ hàng -->
+                    <div class="box-cart" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <a href="#">
+                            <i class="fa-solid fa-cart-shopping cart"></i>
+                            <span class="cart-count">{{ cartItems.length }}</span>
+                        </a>
+
+                        <!-- Popup hiển thị sản phẩm khi hover vào giỏ hàng -->
+                        <div class="cart-popup" v-if="showCart">
+                            <div v-for="item in cartItems" :key="item.id" class="cart-item">
+                                <img :src="item.image" alt="Sản phẩm 01" class="product-image" /> <!--Hiển thị hình ảnh ở đây-->
+                                <div class="product-info">
+                                    <h4>{{ item.name }}</h4>
+                                    <p>{{ item.description }}</p>
+                                    <span>{{ item.price }} Đ</span>
+                                </div>
+                            </div>
+
+                            <div v-if="cartItems.length === 0" class="empty-cart">
+                                Không có sản phẩm nào trong giỏ hàng
+                            </div>
+                            <a v-else href="Page/pay.html" class="view-cart">Thanh toán</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Phần Main -->
+            <div class="text-center mt-5 mb-4">
+                <i class="fa-regular fa-credit-card"></i>
+                <h2>Thanh toán</h2>
+                <p>Vui lòng kiểm tra thông tin Khách hàng, thông tin Giỏ hàng trước khi Đặt hàng.</p>
+            </div>
+            
+            <div class="row" v-if="!purchaseCompleted">
+                <div class="col-md-6">
+                    <h4>Thông tin khách hàng</h4>
+                    <form @submit.prevent="completePurchase">
+                        <div class="form-group">
+                            <label for="hoTen">Họ tên</label>
+                            <input type="text" class="form-control" id="hoTen" placeholder="Họ và tên">
+                        </div>
+                        <div class="form-group">
+                            <label for="diaChi">Địa chỉ</label>
+                            <input type="text" class="form-control" id="diaChi" >
+                        </div>
+                        <div class="form-group">
+                            <label for="dienThoai">Điện thoại</label>
+                            <input type="text" class="form-control" id="dienThoai">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" >
+                        </div>
+                        <div class="form-group">
+                            <label for="ngaySinh">Ngày sinh</label>
+                            <input type="text" class="form-control" id="ngaySinh">
+                        </div>
+                        <div class="form-group">
+                            <label for="cmnd">CMND</label>
+                            <input type="text" class="form-control" id="cmnd" >
+                        </div>
+                        
+                        <h5>Hình thức thanh toán</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="thanhToan" id="tienMat" checked>
+                            <label class="form-check-label" for="tienMat">Tiền mặt</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="thanhToan" id="chuyenKhoan">
+                            <label class="form-check-label" for="chuyenKhoan">Chuyển khoản</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="thanhToan" id="shipCod">
+                            <label class="form-check-label" for="shipCod">Ship COD</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block mt-4" @click="saveInfo()">Đặt hàng</button>
+                    </form>
+                </div>
+    
+                <div class="col-md-6">
+                    <h4>Giỏ hàng</h4>
+                    <ul class="list-group mb-3">
+                        <template v-if="cartItems.length > 0">
+                            <li class="list-group-item d-flex justify-content-between" v-for="(item, index) in cartItems" :key="item.id">
+                                <span>{{ item.name }}</span>
+                                <span>{{ item.price }} Đ</span>
+                                <div class="quantity-controls">
+                                    <button @click="decreaseQuantity(index)" class="btn btn-secondary btn-sm">-</button>
+                                    <span>{{ item.quantity }}</span>
+                                    <button @click="increaseQuantity(index)" class="btn btn-secondary btn-sm">+</button>
+                                </div>
+                                <strong>{{ (parseFloat(item.price.replace(' Đ', '')) * item.quantity).toFixed(2) }} Đ</strong>
+                                <button @click="removeFromCart(index)" class="btn btn-danger btn-sm">Xóa</button>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li class="list-group-item text-center">
+                                Không có sản phẩm nào trong giỏ hàng.
+                            </li>
+                            <a href="./Product.html">Tiếp tục mua sắm</a>
+                        </template>
+                    </ul>
+                    <div class="input-group mb-3" v-if="cartItems.length > 0">
+                        <input type="text" class="form-control" placeholder="Mã khuyến mãi">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Xác nhận</button>
+                        </div>
+                    </div>
+                    <div class="total-price" v-if="cartItems.length > 0">
+                        <h5>Tổng tiền: {{ totalPrice.toFixed(2) }} Đ</h5>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <div v-else>
+                <p>Chúng tôi đã nhận được đơn hàng của bạn.</p>
+                <p>Cảm ơn bạn đã lựa chọn chúng tôi! Chúng tôi rất vui mừng được phục vụ bạn và hy vọng bạn hài lòng với sản phẩm.</p>
+                <div>
+                    <i class="fa-solid fa-check-to-slot"></i> <a href="./kiemtradonhang.html">Đi đến trang kiểm tra đơn hàng</a>
+                </div>
+                <div>
+                    <i class="fa-solid fa-house"></i> <a href="../index.html">Quay lại trang chủ</a>
+                </div>
+            </div>
+            <!-- End Main -->
+
+
+        </div>
+        <!-- Phần footer -->
+        <div class="box-first-footer">
+            <div class="contact">
+                <h2>Thông tin liên hệ</h2>
+                <div class="in">
+                    <div>Tầng 81 Toà Lendmark 81 Hồ Chính Minh</div>
+                    <div>Phone: 0376952***</div>
+                    <div>Gmail: damtrungkien229@gmail.com</div>
+                </div>
+            </div>
+            <div class="contact">
+                <h2>Danh mục</h2>
+                <div class="in">
+                    <a href="">
+                        <div>Đồ chơi mầm non</div>
+                    </a>
+                    <a href="">
+                        <div>Búp bê</div>
+                    </a>
+                    <a href="">
+                        <div>Đồ chơi lắp ghép</div>
+                    </a>
+                    <a href="">
+                        <div>Robot</div>
+                    </a>
+                    <a href="">
+                        <div>Xe đạp & Scooter</div>
+                    </a>
+                </div>
+            </div>
+            <div class="contact">
+                <h2>Hỗ trợ khách hàng</h2>
+                <div class="in">
+                    <a href="">
+                        <div>Chính sách bảo mật</div>
+                    </a>
+                    <a href="">
+                        <div>Chính sách bảo hành đổi trả hàng hóa</div>
+                    </a>
+                    <a href="">
+                        <div>Chính sách thanh toán</div>
+                    </a>
+                    <a href="">
+                        <div>Những câu hỏi thường gặp</div>
+                    </a>
+                </div>
+            </div>
+            <div class="contact">
+                <h2>Tham gia với chúng tôi</h2>
+                <div class="in">
+                    <div style="margin-bottom: 25px;">Nhập email của bạn bên dưới để là người đầu tiên biết 
+                        về sản phẩm mới ra mắt của chúng tôi.
+                    </div>
+                    <div class="box-email">
+                        <input type="text" placeholder="Email adress...">
+                        <button type="submit">
+                            <i class="fa-solid fa-envelope"></i>
+                        </button>
+                    </div>
+                    <div class="icon-contact">
+                        <ul>
+                            <li>
+                                <a href="">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa-brands fa-dribbble"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa-brands fa-behance"></i>
+                                </a>
+                            </li>                     
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-second-footer">
+            <div class="first-box">
+                <div class="title">
+                    Điều hành bởi © Đàm Trung Kiên
+                </div>
+            </div>
+            <div class="second-box">
+                <div class="box-bank">
+                    <img src="../Picture/bank.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                cartItems: [],
+                showCart: false,
+                recipientName: '',
+                address: '',
+                phone: '',
+                paymentMethod: '',
+                purchaseCompleted: false,
+            },
+            mounted() {
+                // Lấy giỏ hàng từ localStorage
+                const savedCartItems = localStorage.getItem('cartItems');
+                if (savedCartItems) {
+                    this.cartItems = JSON.parse(savedCartItems);
+                }
+        
+                // Thiết lập quantity mặc định là 1 nếu chưa có
+                this.cartItems.forEach(item => {
+                    if (!item.quantity) {
+                        this.$set(item, 'quantity', 1);
+                    }
+                });
+            },
+            methods: {
+                removeFromCart(index) {
+                    // Xóa sản phẩm ra khỏi giỏ hàng
+                    this.cartItems.splice(index, 1);
+                    localStorage.setItem('cartItems', JSON.stringify(this.cartItems)); // Cập nhật localStorage
+                },
+                increaseQuantity(index) {
+                    // Tăng số lượng sản phẩm
+                    this.cartItems[index].quantity++;
+                    localStorage.setItem('cartItems', JSON.stringify(this.cartItems)); // Cập nhật localStorage
+                },
+                decreaseQuantity(index) {
+                    // Giảm số lượng sản phẩm, không cho xuống dưới 1
+                    if (this.cartItems[index].quantity > 1) {
+                        this.cartItems[index].quantity--;
+                        localStorage.setItem('cartItems', JSON.stringify(this.cartItems)); // Cập nhật localStorage
+                    }
+                },
+                completePurchase() {
+                    // Kiểm tra xem các trường thông tin có được điền đầy đủ hay không
+                    const hoTen = document.getElementById('hoTen').value;
+                    const diaChi = document.getElementById('diaChi').value;
+                    const dienThoai = document.getElementById('dienThoai').value;
+                    const email = document.getElementById('email').value;
+                    const ngaySinh = document.getElementById('ngaySinh').value;
+                    const cmnd = document.getElementById('cmnd').value;
+        
+                    if (!hoTen || !diaChi || !dienThoai || !email || !ngaySinh || !cmnd) {
+                        alert('Vui lòng điền đầy đủ thông tin trước khi thanh toán!');
+                        return; // Ngừng thực hiện nếu thông tin chưa đầy đủ
+                    }
+        
+                    // Xử lý thanh toán
+                    localStorage.removeItem('cartItems'); // Xóa giỏ hàng sau khi thanh toán
+                    alert('Thanh toán thành công!');
+                    this.purchaseCompleted = true; // Đánh dấu là đã hoàn tất thanh toán
+                    window.scrollTo(0, 0); 
+                },
+
+                // Lưu thông tin khách hàng và sản phẩm
+                saveInfo(){
+                    const hoTen = document.getElementById('hoTen').value;
+                    const diaChi = document.getElementById('diaChi').value;
+                    const dienThoai = document.getElementById('dienThoai').value;
+                    const email = document.getElementById('email').value;
+                    const ngaySinh = document.getElementById('ngaySinh').value;
+                    const cmnd = document.getElementById('cmnd').value;
+
+                    // Lưu thông tin vào local Storage
+                    localStorage.setItem('hoTen', hoTen);
+                    localStorage.setItem('diaChi', diaChi);
+                    localStorage.setItem('dienThoai', dienThoai);
+                    localStorage.setItem('email', email);
+                    localStorage.setItem('ngaySinh', ngaySinh);
+                    localStorage.setItem('cmnd', cmnd);
+
+                }
+
+            },
+            computed: {
+                totalPrice() {
+                    return this.cartItems.reduce((total, item) => total + (parseFloat(item.price.replace(' Đ', '')) * item.quantity), 0);
+                }
+            }
+        });
+        </script>
+        
+</body>
+</html>

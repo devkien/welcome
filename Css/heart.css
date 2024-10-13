@@ -1,0 +1,61 @@
+.wishlist {
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+.heart-list {
+    display: flex;
+}
+
+.heart-product {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    max-width: 300px;
+}
+
+.new-badge {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    background-color: #00a2ff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.product-info p {
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
+}
+
+.buy-button {
+    background-color: #00a2ff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.heart {
+    font-size: 24px;
+    color: #ff4d4d;
+}

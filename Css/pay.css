@@ -1,0 +1,50 @@
+/* Phần Main */
+.text-center i {
+    font-size: 50px;
+}
+
+form label {
+    font-weight: 500;
+}
+
+form input, form select {
+    margin-bottom: 15px;
+}
+
+/* Nút cộng và trừ sản phẩm */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-controls button {
+    background-color: white;
+    border: 2px solid #0056b3; /* Màu viền đỏ */
+    border-radius: 50%; /* Hình dạng tròn */
+    color: #0056b3; /* Màu chữ đỏ */
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.quantity-controls span {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc; /* Viền màu xám */
+    border-radius: 8px; /* Bo góc */
+    margin: 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Kết thúc nút cộng và trừ sản phẩm */

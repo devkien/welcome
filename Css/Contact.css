@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.contact-form-container {
+    flex: 1;
+    max-width: 45%;
+    padding-right: 20px;
+}
+
+.contact-map-container {
+    flex: 1;
+    max-width: 50%;
+}
+
+.contact-header {
+    margin-bottom: 20px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form .form-group {
+    margin-bottom: 15px;
+}
+
+.contact-form .btn-submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.contact-form .btn-submit:hover {
+    background-color: #0056b3;
+}
+
+.contact-map-container iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    border: none;
+}

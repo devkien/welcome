@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link lấy icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+    <!-- bootstrap 4 cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="Css/main.css">
+    <link rel="stylesheet" href="Css/main-moblie.css">
+
+
+    <title>Đàm Trung Kiên</title>
+</head>
+<body>
+    <div id="app">
+
+    <div class="container">
+        <div class="header">
+            <div class="content">
+                <div class="box-menu-mobile">
+                    <button>
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Start box menu -->
+    <div class="box-logo">
+        <div class="logo">
+            <a href="index.html">
+                <img src="Picture/logonew.png" alt="">
+            </a>
+        </div>
+    </div>
+
+            <nav class="box-menu">
+                <ul class="all-list-menu">
+                    <li>
+                        <a href="#" class="hover-a">Trang chủ</a>
+                    </li>
+                    
+                    <li class="padding-list-menu">
+                        <a href="./Page/Product.html" class="hover-a">Sản phẩm <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="./Page/do-choi-theo-phim.html" class="hover-a">Đồ chơi theo phim</a></li>
+                            <li><a href="./Page/do-choi-phuong-tien.html" class="hover-a">Đồ chơi phương tiện</a></li>
+                            <li><a href="./Page/do-choi-sang-tao.html" class="hover-a">Đồ chơi sáng tạo</a></li>
+                            <li><a href="./Page/do-choi-mo-phong.html" class="hover-a">Đồ chơi mô phỏng</a></li>
+                            <!-- Menu cấp 3 -->
+                            <li>
+                                <a href="./Page/do-dung-hoc-tap.html" class="hover-a">Đồ dùng học tập <i class="fa-solid fa-caret-right"></i></a>
+                                <ul class="sub-sub-menu">
+                                    <li><a href="./Page/balo-dihoc.html" class="hover-a">Balo đi học</a></li>
+                                    <li><a href="./Page/balo-mamnon.html" class="hover-a">Balo mầm non</a></li>
+                                    <li><a href="./Page/hop-viet.html" class="hover-a">Hộp viết</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="padding-list-menu">
+                        <a href="Page/introduce.html" class="hover-a">Giới thiệu</a>
+                    </li>
+                    <li class="padding-list-menu">
+                        <a href="Page/news.html" class="hover-a">Tin tức</a>
+                    </li>
+                    <li class="padding-list-menu">
+                        <a href="Page/contact.html" class="hover-a">Liên hệ</a>
+                    </li>
+                    <li class="padding-list-menu">
+                        <a href="Page/kiemtradonhang.html" class="hover-a">Kiểm tra đơn hàng</a>
+                    </li>
+                </ul>
+            </nav>
+
+<!-- End Box Menu -->
+                <!-- Biểu tượng tìm kiếm -->
+                <div class="box-icon">
+                    <a href="#" class="box-search" @click.prevent="openSearchBox">
+                        <i class="fa-solid fa-magnifying-glass search"></i>
+                    </a>
+
+                    <div v-if="showSearch" class="custom-alert">
+                        <div class="alert-box">
+                            <p>Nhập thông tin tìm kiếm:</p>
+                            <input type="text" v-model="searchQuery" placeholder="Nhập từ khoá để tìm kiếm..." />
+                            <button @click="submitSearch" class="btn-search">Tìm kiếm</button>
+                            <button @click="closeSearchBox" class="btn-close">Đóng</button>
+                        </div>
+                    </div>                    
+
+                    <!-- Biểu tượng người dùng -->
+                    <div class="box-user">
+                        <div class="user-icon" @mouseover="isHovering = true" @mouseleave="isHovering = false">
+                            <!-- Biểu tượng người dùng -->
+                            <i class="fa fa-user"></i>
+
+                            <!-- Khi hover vào biểu tượng người dùng thì hiện dropdown -->
+                            <div v-if="isHovering" class="dropdown">
+                                <a href="./Page/login.html" class="dropdown-item">Đăng nhập</a>
+                                <a href="./Page/register.html" class="dropdown-item">Đăng ký</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biểu tượng yêu thích -->
+                    <a href="./Page/heart.html" class="box-heart" style="position: relative;">
+                        <i class="fa-regular fa-heart heart" style="font-size: 24px;"></i>
+                        <span 
+                          v-if="heartItems.length > 0" 
+                          style="
+                            position: absolute; 
+                            top: -5px; 
+                            right: -10px; 
+                            background: red; 
+                            color: white; 
+                            border-radius: 50%; 
+                            padding: 2px 6px; 
+                            font-size: 12px;
+                          "
+                        >
+                          {{ heartItems.length }}
+                        </span>
+                      </a>
+                      
+
+                    <!-- Biểu tượng giỏ hàng -->
+                    <div class="box-cart" @mouseenter="showCart = true" @mouseleave="showCart = false">
+                        <a href="#">
+                          <i class="fa-solid fa-cart-shopping cart"></i>
+                          <span class="cart-count">{{ cartItems.length }}</span>
+                        </a>
+                    
+                        <!-- Popup hiển thị sản phẩm khi hover vào giỏ hàng -->
+                        <div class="cart-popup" v-if="showCart">
+                            <div v-for="(item, index) in cartItems" :key="item.id" class="cart-item">
+                            <img :src="item.image" alt="Ảnh sản phẩm" class="product-image" />
+                            <div class="product-info">
+                                <h4>{{ item.name }}</h4>
+                                <p>{{ item.description }}</p>
+                                <span>{{ item.price }} Đ</span>
+                            </div>
+                            <!-- Icon thùng rác để xóa sản phẩm -->
+                            <button @click="removeFromCart(index)" class="remove-item">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                            </div>
+                            <!-- Thông báo hoặc nút Thanh toán -->
+                            <div v-if="cartItems.length === 0" class="empty-cart">
+                            Không có sản phẩm nào trong giỏ hàng
+                            </div>
+                            <a v-else class="view-cart" href="./Page/pay.html">Thanh toán</a>
+                       </div>
+                    <!-- Kết thúc giỏ hàng -->
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="banner">
+            <button class="prev" @click="prevSlide">❮</button>
+            <img :src="images[currentIndex]" alt="slider image">
+            <button class="next" @click="nextSlide">❯</button>
+        
+            <div id="list">
+                <ul>
+                    <li v-for="(image, index) in images" :key="index">
+                        <button :class="{ active: currentIndex === index }" @click="indexNumber(index)"></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+
+     <!-- Đoạn 4 cái icon dưới banner -->
+      
+        <div class="info-section">
+            <div class="info-item">
+                <div class="info-icon">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/policies_icon_1.png?v=141" alt="ảnh 1">
+                </div>
+                <div class="info-text">
+                    <h3>Vận chuyển toàn quốc</h3>
+                    <p>Vận chuyển nhanh chóng</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/policies_icon_2.png?v=141" alt="ảnh 2">
+                </div>
+                <div class="info-text">
+                    <h3>Ưu đãi hấp dẫn</h3>
+                    <p>Nhiều ưu đãi khuyến mãi hot</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/policies_icon_3.png?v=141" alt="ảnh 3">
+                </div>
+                <div class="info-text">
+                    <h3>Bảo đảm chất lượng</h3>
+                    <p>Sản phẩm đã được kiểm định</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-icon">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/policies_icon_4.png?v=141" alt="ảnh 4">
+                </div>
+                <div class="info-text">
+                    <h3>Hotline: 190012345</h3>
+                    <p>Vui lòng gọi hotline để hỗ trợ</p>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Kết thúc 4 cái icon dưới banner -->
+    
+        <div class="setion-shop">
+            <div class="box-title">
+                <div class="title-shop">Danh mục nổi bật</div>
+            </div>
+            <div class="all-box-product">
+                <div class="box-product">
+                    <a href="#">
+                        <img src="Picture/dochoimamnon.png" alt="">
+                        <div class="title-product">Đồ chơi mầm non</div>
+                    </a>
+                </div>
+                <div class="box-product">
+                    <a href="#">
+                        <img src="Picture/dochoibupbe.png" alt="">
+                        <div class="title-product">Búp bê</div>
+                    </a>
+                </div>
+                <div class="box-product">
+                    <a href="#">
+                        <img src="Picture/dochoilego.png" alt="">
+                        <div class="title-product">Đồ chơi lắp nghép</div>
+                    </a>
+                </div>
+                <div class="box-product">
+                    <a href="#">
+                        <img src="Picture/dochoirobot.png" alt="">
+                        <div class="title-product">Robot</div>
+                    </a>
+                </div>
+                <div class="box-product">
+                    <a href="#">
+                        <img src="Picture/dochoixedap.png" alt="">
+                        <div class="title-product">Xe đạp & Scooter</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    <!-- Start-->
+    <div class="box-product-sell">
+        <div class="box-product-sell-2">
+            <div class="in-title">
+                <div class="word highlight-title">Hàng mới</div>
+                <div class="see-deals">
+                    <a href="./Page/Product.html" class="fancy-button">
+                        Xem thêm
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+    
+            <div class="all-new-product">
+                
+                <!-- Sản phẩm 1 -->
+                    <div class="new-product">
+                        <div class="all-product">
+                          <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                              <img id="Pic-4" src="Picture/new-goods/sanpham1.jpg" alt="">
+                              <div class="note-notif">
+                                <div class="title-hot">Hot</div>
+                              </div>
+                              <div class="all-box-icon">
+                                <i 
+                                    :class="isHearted(product1) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                    @click="toggleHeart(product1)"
+                                    style="cursor: pointer; color: red;"
+                                    title="Yêu thích"
+                                ></i>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                              </div>
+                            </div>
+                            <div class="contents-new-product">
+                              <div class="star">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                              </div>
+                              <div class="view-product">(4 review)</div>
+                            </div>
+                          </a>
+                          <div class="box-name-product">
+                            <div class="name-product">Lego Ninjago</div>
+                            <div id="Prict-prod" class="price-product">
+                              <del>2.000.000 Đ</del>
+                              <span>1.629.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                              <button type="submit" @click="addToCart(product1)">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span>Thêm giỏ hàng</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    <!-- Sản phẩm 2 -->
+                    <div class="new-product">
+                        <div class="all-product">
+                            <a href="" style="text-decoration: none;">
+                                <div class="new-img-product">
+                                    <img id="Pic-4" src="Picture/new-goods/sanpham2.jpg" alt="">
+                                    <div class="note-notif">
+                                        <div class="title-hot">Hot</div>
+                                    </div>
+                                    <div class="all-box-icon">
+                                        <i 
+                                            :class="isHearted(product2) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                            @click="toggleHeart(product2)"
+                                            style="cursor: pointer; color: red;"
+                                            title="Yêu thích"
+                                         ></i>
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </div>
+                                </div>
+                                <div class="contents-new-product">
+                                    <div class="star">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <div class="view-product">(4 review)</div>
+                                </div>
+                            </a>
+                            <div class="box-name-product">
+                                <div class="name-product">Đồ Chơi Monster Trucks</div>
+                                <div id="Prict-prod" class="price-product">
+                                    <del>950.000 Đ</del>
+                                    <span>911.000 Đ</span>
+                                </div>
+                                <div class="buttom-1">
+                                    <button type="submit" @click="addToCart(product2)">
+                                        <i class="fa-solid fa-cart-plus"></i>
+                                        <span>Thêm giỏ hàng</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- Sản phẩm 3 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-4" src="Picture/new-goods/sanpham3.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product3) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product3)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Lắp Ráp Nhân Vật Pokemon</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>200.000 Đ</del>
+                                <span>149.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product3)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 4 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-4" src="Picture/new-goods/sanpham4.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product4) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product4)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Đồ Chơi Máy Nuôi Thú Ảo</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>2.000.000 Đ</del>
+                                <span>1.699.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product4)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 5 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-5" src="Picture/new-goods/sanpham5.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product5) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product5)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Đồ Chơi Robot Tự Động</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>150.000 Đ</del>
+                                <span>139.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product5)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 6 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-6" src="Picture/new-goods/sanpham6.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product6) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product6)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Đồ Chơi Phân Loại Màu Sắc</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>250.000 Đ</del>
+                                <span>229.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product6)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 7 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-7" src="Picture/new-goods/sanpham7.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product7) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product7)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Đồ Chơi Rái Cá Ngủ</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>400.000 Đ</del>
+                                <span>369.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product7)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 8 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-8" src="Picture/new-goods/sanpham8.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product8) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product8)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Đồ Chơi Siêu Xe</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>300.000 Đ</del>
+                                <span>269.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product8)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sản phẩm 9 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-9" src="Picture/new-goods/sanpham9.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product9) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product9)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Siêu Xe Phiên Bản Ngọc Trai</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>150.000 Đ</del>
+                                <span>119.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product9)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Sản phẩm 10 -->
+                <div class="new-product">
+                    <div class="all-product">
+                        <a href="" style="text-decoration: none;">
+                            <div class="new-img-product">
+                                <img id="Pic-10" src="Picture/new-goods/sanpham10.jpg" alt="">
+                                <div class="note-notif">
+                                    <div class="title-hot">Hot</div>
+                                </div>
+                                <div class="all-box-icon">
+                                    <i 
+                                        :class="isHearted(product10) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'" 
+                                        @click="toggleHeart(product10)"
+                                        style="cursor: pointer; color: red;"
+                                        title="Yêu thích"
+                                    ></i>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <div class="contents-new-product">
+                                <div class="star">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <div class="view-product">(4 review)</div>
+                            </div>
+                        </a>
+                        <div class="box-name-product">
+                            <div class="name-product">Ván Trượt KS8</div>
+                            <div id="Prict-prod" class="price-product">
+                                <del>250.000 Đ</del>
+                                <span>229.000 Đ</span>
+                            </div>
+                            <div class="buttom-1">
+                                <button type="submit" @click="addToCart(product10)">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                    <span>Thêm giỏ hàng</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    
+    <!-- End -->
+    
+    <div class="container-san-pham">
+        <div class="title-san-pham">
+            <h3>Danh Mục Sản Phẩm Theo Mùa</h3>
+        </div>
+        <div class="khung-san-pham">
+            <div class="the-san-pham">
+                <img src="Picture/thesp1.jpg" alt="Văn Phòng Phẩm" class="anh-san-pham">
+                <h3 class="ten-san-pham">Ba Lô, Túi Đeo & Vali</h3>
+                <button class="nut-xem-them">Xem Thêm</button>
+            </div>
+            <div class="the-san-pham">
+                <img src="Picture/thesp2.jpg" alt="Đồ Chơi Theo Phim" class="anh-san-pham">
+                <h3 class="ten-san-pham">Văn Phòng Phẩm</h3>
+                <button class="nut-xem-them">Xem Thêm</button>
+            </div>
+            <div class="the-san-pham">
+                <img src="Picture/thesp4.jpg" alt="Đồ Dã Ngoại" class="anh-san-pham">
+                <h3 class="ten-san-pham">Đồ Chơi Theo Phim</h3>
+                <button class="nut-xem-them">Xem Thêm</button>
+            </div>
+            <div class="the-san-pham">
+                <img src="Picture/thesp5.jpg" alt="Đồ Chơi Sáng Tạo" class="anh-san-pham">
+                <h3 class="ten-san-pham">Đồ Dã Ngoại</h3>
+                <button class="nut-xem-them">Xem Thêm</button>
+            </div>
+            <div class="the-san-pham">
+                <img src="Picture/thesp3.jpg" alt="Đồ Chơi Sáng Tạo" class="anh-san-pham">
+                <h3 class="ten-san-pham">Đồ Chơi Sáng Tạo</h3>
+                <button class="nut-xem-them">Xem Thêm</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Phần bộ độ tuổi -->
+<div class="container-tuoi">
+    <div class="title-tuoi">
+        <h3>Độ Tuổi</h3>
+    </div>
+    <div class="khung-tuoi">
+        <div class="the-tuoi">
+            <img src="Picture/do-tuoi/0_-_12_thang_296x.jpg" alt="0 - 12 Tháng" class="anh-tuoi">
+            <h3 class="ten-tuoi">0 - 12 Tháng</h3>
+            <button class="nut-tuoi">Xem Thêm</button>
+        </div>
+        <div class="the-tuoi">
+            <img src="Picture/do-tuoi/1_-_3_tu_i_296x.jpg" alt="1 - 3 Tuổi" class="anh-tuoi">
+            <h3 class="ten-tuoi">1 - 3 Tuổi</h3>
+            <button class="nut-tuoi">Xem Thêm</button>
+        </div>
+        <div class="the-tuoi">
+            <img src="Picture/do-tuoi/3_-_6_tu_i_296x.jpg" alt="3 - 6 Tuổi" class="anh-tuoi">
+            <h3 class="ten-tuoi">3 - 6 Tuổi</h3>
+            <button class="nut-tuoi">Xem Thêm</button>
+        </div>
+        <div class="the-tuoi">
+            <img src="Picture/do-tuoi/6_-_12_tu_i_296x.jpg" alt="6 - 9 Tuổi" class="anh-tuoi">
+            <h3 class="ten-tuoi">6 - 9 Tuổi</h3>
+            <button class="nut-tuoi">Xem Thêm</button>
+        </div>
+        <div class="the-tuoi">
+            <img src="Picture/do-tuoi/Tren_12_tu_i_296x.jpg" alt="Trên 12 Tuổi" class="anh-tuoi">
+            <h3 class="ten-tuoi">Trên 12 Tuổi</h3>
+            <button class="nut-tuoi">Xem Thêm</button>
+        </div>
+    </div>
+</div>
+<!-- Kết thúc độ tuổi -->
+
+<!-- Phần khách hàng nói về sản Phẩm -->
+<div class="container text-center mt-5">
+    <h2 class="mb-4">Khách hàng đã nói gì</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="testimonial-card">
+                <div class="content">
+                    <h5>Trần Linh</h5>
+                    <div class="stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="Evaluate-text">Sản phẩm chất lượng, đồ chơi thú vị có tính sáng tạo tốt, giá cả hợp lý, giao hàng nhanh.</p>
+                    <p><img class="product-img" src="./Picture/new-goods/sanpham1.jpg"> Lego Ninjago</p>
+                </div>
+                <div class="image">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/cus_review_avatar_1_compact.jpg?v=152">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="testimonial-card">
+                <div class="content">
+                    <h5>Nguyên An</h5>
+                    <div class="stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="Evaluate-text">Sản phẩm đẹp, chất liệu tốt, dễ chơi, nhân viên phục vụ rất tận tình và chu đáo. 10 điểm!</p>
+                    <p><img class="product-img" src="./Picture/new-goods/sanpham2.jpg" >Momster Trucks</p>
+                </div>
+                <div class="image">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/cus_review_avatar_2_compact.jpg?v=152">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="testimonial-card">
+                <div class="content">
+                    <h5>Tuấn Trần</h5>
+                    <div class="stars">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                    <p class="Evaluate-text">Giao hàng nhanh, anh shipper thân thiện. Sản phẩm đẹp, đã mua nhiều lần và sẽ tiếp tục ủng hộ shop.</p>
+                    <p><img class="product-img" src="./Picture/new-goods/sanpham3.jpg">Nhân vật Pokemon</p>
+                </div>
+                <div class="image">
+                    <img src="https://theme.hstatic.net/200000881795/1001243022/14/cus_review_avatar_3_compact.jpg?v=152" alt="Tuấn Trần">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Kết thúc phần khách hàng  -->
+
+</div>
+<!-- End container -->
+
+    <!-- Start Contact button -->
+            <div class="nut-lien-he">
+                <!-- Nút gọi điện với tooltip -->
+                <div class="nut">
+                    <span class="tooltip">Gọi ngay cho chúng tôi</span>
+                    <a href="tel:+123456789">
+                        <img src="https://img.icons8.com/ios-filled/50/FFFFFF/phone.png" alt="Icon Gọi điện">
+                    </a>
+                </div>
+            
+                <!-- Nút Messenger với tooltip -->
+                <div class="nut nut-messenger">
+                    <span class="tooltip">Liên hệ qua Messenger</span>
+                    <a href="https://m.me/dtkien229">
+                        <img src="https://img.icons8.com/ios-filled/50/FFFFFF/facebook-messenger.png" alt="Icon Messenger">
+                    </a>
+                </div>
+            </div>
+     <!-- End contact button -->
+
+    <!-- Phần footer -->
+    <div class="box-first-footer">
+        <div class="contact">
+            <h2>Thông tin liên hệ</h2>
+            <div class="in">
+                <div>Tầng 81 Toà Lendmark 81 Hồ Chính Minh</div>
+                <div>Phone: 0376952***</div>
+                <div>Gmail: damtrungkien229@gmail.com</div>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Danh mục</h2>
+            <div class="in">
+                <a href="">
+                    <div>Đồ chơi mầm non</div>
+                </a>
+                <a href="">
+                    <div>Búp bê</div>
+                </a>
+                <a href="">
+                    <div>Đồ chơi lắp ghép</div>
+                </a>
+                <a href="">
+                    <div>Robot</div>
+                </a>
+                <a href="">
+                    <div>Xe đạp & Scooter</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Hỗ trợ khách hàng</h2>
+            <div class="in">
+                <a href="">
+                    <div>Chính sách bảo mật</div>
+                </a>
+                <a href="">
+                    <div>Chính sách bảo hành đổi trả hàng hóa</div>
+                </a>
+                <a href="">
+                    <div>Chính sách thanh toán</div>
+                </a>
+                <a href="">
+                    <div>Những câu hỏi thường gặp</div>
+                </a>
+            </div>
+        </div>
+        <div class="contact">
+            <h2>Tham gia với chúng tôi</h2>
+            <div class="in">
+                <div style="margin-bottom: 25px;">Nhập email của bạn bên dưới để là người đầu tiên biết 
+                    về sản phẩm mới ra mắt của chúng tôi.
+                </div>
+                <div class="box-email">
+                    <input type="text" placeholder="Email adress...">
+                    <button type="submit">
+                        <i class="fa-solid fa-envelope"></i>
+                    </button>
+                </div>
+                <div class="icon-contact">
+                    <ul>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-dribbble"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa-brands fa-behance"></i>
+                            </a>
+                        </li>                     
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-second-footer">
+        <div class="first-box">
+            <div class="title">
+                Điều hành bởi © Đàm Trung Kiên
+            </div>
+        </div>
+        <div class="second-box">
+            <div class="box-bank">
+                <img src="Picture/payments-1.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- <div style="margin-bottom: 600px;"></div> -->
+
+    <script src="https://kit.fontawesome.com/eda05fcf5c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="js/app.js"></script>
+    </div>
+    <!-- end div app -->
+</body>
+</html>
+
